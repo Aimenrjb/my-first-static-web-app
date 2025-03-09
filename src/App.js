@@ -1,32 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
 function App() {
-  const name = "friend"; // More welcoming!
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>🌟 Hello, {name}! 🌟</h1>
-      <p style={styles.message}>
-        Welcome to our awesome React app. Have a fantastic day! 😊
-      </p>
-    </div>
-  );
-}
+  const [data, setData] = useState('');
 
-// Simple inline styles
-const styles = {
-  container: {
-    textAlign: "center",
-    marginTop: "50px",
-    fontFamily: "Arial, sans-serif",
-  },
-  heading: {
-    color: "#0078D7",
-    fontSize: "2rem",
-  },
-  message: {
-    color: "#555",
-    fontSize: "1.2rem",
-  },
-};
+  useEffect(() => {
+    (async function () {
+      const { text } = await( await fetch(`/api/message`)).json();
+      setData(text);
+    })();
+  });
+
+  return <div>{data}</div>;
+}
 
 export default App;
